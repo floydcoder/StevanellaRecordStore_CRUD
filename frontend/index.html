@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/4373c5872a.js" crossorigin="anonymous"></script>
+    <!-- CSS only -->
+    <title>Stevanella Records Store</title>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="ps-5 navbar-brand" href="#">Stevanella Record Store</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" 
+              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end pe-5" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <!-- <a class="nav-item nav-link" href="#" onclick="filterRecords('Pop')">Onsale <span class="sr-only"></span></a> -->
+          
+          <a class="nav-item nav-link" href="#" onclick="loadRecords()">All</a>
+          <a class="nav-item nav-link" href="#" onclick="filterRecords('Rock')">Rock</a>
+          <a class="nav-item nav-link" href="#" onclick="filterRecords('Jazz')">Jazz</a>
+          <a class="nav-item nav-link" href="#" onclick="filterRecords('Blues')">Blues</a>
+          <a class="nav-item nav-link" href="#" onclick="filterRecords('Classic')">Classic</a>
+          <a class="nav-item nav-link" href="#" onclick="filterRecords('Pop')">Pop</a>
+          <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+        </div>
+      </div>
+    </nav>
+    <div class="container-lg" id="records-container">
+      <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Artist</th>
+            <th scope="col">Album</th>
+            <th scope="col">Released</th>
+            <th scope="col">Label</th>
+            <th scope="col">Cover</th>
+            <th scope="col">Genra</th>
+            <th scope="col">Onsale</th>
+            <th scope="col">Price</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+
+      </table>
+      <div class="row justify-content-end">
+        <button type="button" class="col-12 col-md-6 col-lg-4 col-xxl-2 text-right btn btn-outline-success" onclick="openCreationModal()">Create <i class="fas fa-plus-circle"></i></button>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="model" tabindex="-1" aria-labelledby="modelLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modelLabel">Dynamic</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pmx-3">
+              <!-- Creation Form -->
+              <form onsubmit="return false">
+                <!-- Artist text input -->
+                <div class="mb-3 row justify-content-between">
+                  <label for="new-artist" class="col-2 col-form-label">Artist</label>
+                  <div class="col-8">
+
+                    <input type="text" class="form-control" id="new-artist" placeholder="Artist">
+                  </div>
+                </div>
+                <!-- Album text input -->
+                <div class="mb-3 row justify-content-between">
+                  <label for="new-album" class="col-2 col-form-label">Album</label>
+                  <div class="col-8">
+                    <input type="text" class="form-control" id="new-album" placeholder="Album">
+                  </div>
+                </div>
+                <!-- Released Year selector-->
+                 <!-- Album text input -->
+                 <div class="mb-3 row justify-content-between">
+                  <label for="new-released" class="col-2 col-form-label">Release Year</label>
+                  <div class="col-8">
+                    <input type="year" class="form-control" id="new-released" placeholder="Released">
+                  </div>
+                </div>
+                <!-- Label text input -->
+                <div class="mb-3 row justify-content-between">
+                  <label for="new-released" class="col-2 col-form-label">Label</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" id="new-label" placeholder="Label">
+                 </div>
+                </div>
+                <!-- Cover Text input (url of image) -->
+                <div class="mb-3 row justify-content-between">
+                  <label for="new-released" class="col-2 col-form-label">Cover</label>
+                  <div class="col-8">
+                    <input type="text" class="form-control" id="new-cover" placeholder="Cover">
+                  </div>
+                </div>
+                <!-- Genre Selector (Rock, Indie Rock, Pop, Jazz, Blues, Classic) -->
+                <div class="mb-3 row justify-content-between">
+                  <label for="new-genre" class="col-2 col-form-label">Genre</label>
+                  <div class="col-8">
+                    <select class="form-select" aria-label="Default select example" id="new-genre">
+                      <option value="Rock">Rock</option>
+                      <option value="Jazz">Jazz</option>
+                      <option value="Pop">Blues</option>
+                      <option value="Pop">Classic</option>
+                      <option value="Pop">Pop</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- Price number input -->
+                <div class="mb-3 row justify-content-between ">
+                  <label for="new-genre" class="col-2 col-form-label">Price</label>
+                  <div class="col-8">
+                  <input type="number" class="form-control" id="new-price" placeholder="Price" min="0" value="0">
+                  </div>
+                </div>
+                <!-- Onsale radio input -->
+                <div class="mb-3 px-3 row justify-content-between">
+                  <div class="form-check col-6">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="new-onsale-yes">
+                    <label class="form-check-label" for="new-onsale-yes">
+                      On Sale
+                    </label>
+                  </div>
+                  <div class="form-check col-6">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="new-onsale-no" checked>
+                    <label class="form-check-label" for="new-onsale-no">
+                      Not On Sale
+                    </label>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-success" id="modal-submit-btn">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+    </footer>
+    <script src="index.js"></script>
+</body>
+</html>
